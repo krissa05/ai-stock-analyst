@@ -552,8 +552,8 @@ app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 @app.get("/chat")
 async def serve_chat():
-    return FileResponse(os.path.join(FRONTEND_DIR, "chat.html"))
+    return FileResponse(str(pathlib.Path(FRONTEND_DIR) / "chat.html"))
 
 @app.get("/")
 async def serve_index():
-    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+    return FileResponse(str(pathlib.Path(FRONTEND_DIR) / "index.html"))
