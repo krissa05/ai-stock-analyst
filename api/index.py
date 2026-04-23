@@ -556,4 +556,4 @@ async def serve_chat():
 
 @app.get("/")
 async def serve_index():
-    return FileResponse(str(pathlib.Path(FRONTEND_DIR) / "index.html"))
+    return FileResponse(str(pathlib.Path(FRONTEND_DIR) / "chat.html"))
