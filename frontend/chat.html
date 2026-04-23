@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Stock Analyst — Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">📈 AI Analyst</div>
+      <div class="brand-sub">INSTITUTIONAL RESEARCH</div>
+    </div>
+
+    <div id="mktStatus" class="mkt-status">
+      <span class="mkt-dot"></span>
+      <span class="mkt-label">MARKET LIVE</span>
+    </div>
+
+    <div id="stockPanel" class="stock-panel">
+      <div class="panel-empty">
+        <div class="panel-empty-icon">🔍</div>
+        <div>Enter a ticker to see live data & charts</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section-label">QUICK PICKS</div>
+    <div class="quick-picks">
+      <button class="qpick" onclick="quickAnalyze('RELIANCE.NS')">
+        <span class="qpick-sym">RELIANCE.NS</span>
+        <span class="qpick-name">Reliance Ind.</span>
+      </button>
+      <button class="qpick" onclick="quickAnalyze('TCS.NS')">
+        <span class="qpick-sym">TCS.NS</span>
+        <span class="qpick-name">Tata Consultancy</span>
+      </button>
+      <button class="qpick" onclick="quickAnalyze('INFY.NS')">
+        <span class="qpick-sym">INFY.NS</span>
+        <span class="qpick-name">Infosys</span>
+      </button>
+      <button class="qpick" onclick="quickAnalyze('HDFCBANK.NS')">
+        <span class="qpick-sym">HDFCBANK.NS</span>
+        <span class="qpick-name">HDFC Bank</span>
+      </button>
+      <button class="qpick" onclick="quickAnalyze('AAPL')">
+        <span class="qpick-sym">AAPL</span>
+        <span class="qpick-name">Apple Inc.</span>
+      </button>
+      <button class="qpick" onclick="quickAnalyze('NVDA')">
+        <span class="qpick-sym">NVDA</span>
+        <span class="qpick-name">NVIDIA</span>
+      </button>
+      <button class="qpick" onclick="quickAnalyze('MSFT')">
+        <span class="qpick-sym">MSFT</span>
+        <span class="qpick-name">Microsoft</span>
+      </button>
+    </div>
+
+    <div class="sidebar-footer">⚠ Educational only. Not SEBI-registered advice.</div>
+  </aside>
+
+  <!-- ══ CHAT MAIN ══ -->
+  <main class="chat-main">
+
+    <header class="chat-header">
+      <div class="chat-header-left">
+        <span class="chat-title">AI Stock Analyst</span>
+        <span id="tickerBadge" class="ticker-badge hidden"></span>
+      </div>
+      <div class="chat-header-right">
+        <div id="statusDot" class="status-dot online"></div>
+        <span id="statusText" class="status-text">Connected</span>
+      </div>
+    </header>
+
+    <div id="messages" class="messages">
+      <!-- Welcome screen -->
+      <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-logo">AI ANALYST</div>
+        <div class="welcome-sub">INSTITUTIONAL RESEARCH PLATFORM</div>
+        <div class="welcome-desc">
+          I analyze <strong style="color:var(--accent)">any stock</strong> with 10+ indicators — RSI, MACD, Bollinger Bands, Stochastic, ATR, ADX, VWAP, OBV, Moving Averages.
+          <br><br>
+          <span style="font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted)">
+            NSE stocks → add <span style="color:var(--accent)">.NS</span> &nbsp;|&nbsp;
+            Search by company name in the sidebar &nbsp;|&nbsp;
+            Or just type the name below
+          </span>
+        </div>
+        <div class="welcome-pills">
+          <button class="welcome-pill" onclick="sendQuick('Analyze WAAREE.NS — full technical analysis')">
+            <span>→</span> Analyze Waaree Energies (WAAREE.NS)
+          </button>
+          <button class="welcome-pill" onclick="sendQuick('Analyze RELIANCE.NS — full technical analysis')">
+            <span>→</span> Analyze Reliance Industries (RELIANCE.NS)
+          </button>
+          <button class="welcome-pill" onclick="sendQuick('Analyze 005930.KS — Samsung Electronics')">
+            <span>→</span> Analyze Samsung Electronics (005930.KS)
+          </button>
+          <button class="welcome-pill" onclick="sendQuick('Is ZOMATO.NS a buy right now?')">
+            <span>→</span> Is Zomato a buy right now?
+          </button>
+          <button class="welcome-pill" onclick="sendQuick('Analyze NVDA — full technical analysis')">
+            <span>→</span> Analyze NVIDIA (NVDA)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="chips-bar">
+      <button class="chip" onclick="sendQuick('What is RSI and how do I use it for trading?')">📊 Explain RSI</button>
+      <button class="chip" onclick="sendQuick('Explain MACD crossover signals and how to trade them')">📈 MACD Signals</button>
+      <button class="chip" onclick="sendQuick('What is VWAP and how is it used?')">💧 VWAP Guide</button>
+      <button class="chip" onclick="sendQuick('How do I set a stop loss correctly?')">🛡 Stop Loss</button>
+      <button class="chip" onclick="sendQuick('What makes a good Risk to Reward ratio?')">🎯 Risk / Reward</button>
+      <button class="chip" onclick="sendQuick('What is ADX and how to read it?')">📉 ADX Guide</button>
+    </div>
+
+    <div class="input-bar">
+      <textarea id="userInput" class="chat-input"
+        placeholder="Ask anything… e.g. 'Analyze RELIANCE.NS' or 'What's the VWAP for TCS?'"
+        rows="1"></textarea>
+      <button id="sendBtn" class="send-btn" onclick="sendMessage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

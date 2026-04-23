@@ -1,0 +1,7 @@
+echo ".env
+__pycache__/
+*.pyc
+.vercel
+api/__pycache__/
+api/analysis/__pycache__/
+api/data/__pycache__/" > .gitignore
