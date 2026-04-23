@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════
    AI STOCK ANALYST — app.js  (with charts + search)
 ═══════════════════════════════════════════════ */
-const API = "";
+const API = "https://ai-stock-analyst-t397.onrender.com";
 
 let currentTicker = null;
 let chatHistory   = [];
