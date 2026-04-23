@@ -547,13 +547,3 @@ async def quote(symbol: str):
 import pathlib
 BASE_DIR     = pathlib.Path(__file__).parent.parent
 FRONTEND_DIR = str(BASE_DIR / "frontend")
-
-app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
-
-@app.get("/chat")
-async def serve_chat():
-    return FileResponse(str(pathlib.Path(FRONTEND_DIR) / "chat.html"))
-
-@app.get("/")
-async def serve_index():
-    return FileResponse(str(pathlib.Path(FRONTEND_DIR) / "chat.html"))

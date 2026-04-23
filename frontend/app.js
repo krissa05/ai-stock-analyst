@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════
    AI STOCK ANALYST — app.js  (with charts + search)
 ═══════════════════════════════════════════════ */
-const API = "http://localhost:8000";
+const API = "";
 
 let currentTicker = null;
 let chatHistory   = [];
